@@ -38,6 +38,7 @@ setup written with commands, you may just use a visual(vscode/gitdesktop) one in
 - git is created at (Documents/GDIP)
 ### Editing
 - Do whatever editing you want to do
+- git status `<- To check if new files added needed to be "git add"ed ect`
 - git commit -m "Added function to move wrist" `<- Saves current additions as a commit`
 - git push `<- Pushes all commits to remote (github)`
 ### Branching
