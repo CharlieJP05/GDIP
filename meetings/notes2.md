@@ -9,6 +9,8 @@ discussed what we need to buy and what we can code it on
 
 
 ```
+# Notes
+
 ### Gripper types
 - ziptie
 - linear
