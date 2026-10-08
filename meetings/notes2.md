@@ -1,8 +1,8 @@
-Date: 8/10
-Time: Lecture
-Length: Lecture
-Attended: Victor Jai Omar Jamie Charlie Winston
-Overview:
+- Date: 8/10
+- Time: Lecture
+- Length: Lecture
+- Attended: Victor Jai Omar Jamie Charlie Winston
+- Overview:
 ```
 Discussed specifics of idea and gripper types
 discussed what we need to buy and what we can code it on
