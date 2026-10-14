@@ -1,5 +1,7 @@
 import serial
 import numpy as np
+import os
+import time
 class Servo:
     def __init__(self,n) -> None:
         self.min = 0
@@ -22,6 +24,11 @@ class Servo:
             return -1
         point = self.min + (self.max-self.min)*qd
         return point
+    def get_position(self):
+        sp.write((self.numstr + " QD\r").encode())
+        p = sp.read_all()
+        print(p)
+        return p.decode()
     def move(self,p):
         sp.write((self.numstr + "MD"+str(p)+"\r").encode())
     def smooth_to_position(self,a,p):
@@ -82,7 +89,26 @@ class Robot:
     def show_pos(self):
         for i in self.servos:
             print(i.numstr)
-sp = serial.Serial("/dev/ttyUSB0",115200)
+    def teach(self,t,step):
+        path = []
+        for i in range(0,t,step):
+            state = []
+            for servo in self.servos:
+                state.append(servo.get_position())
+            path.append(state)
+            time.sleep(step)
+        return path
+    def run(self,t,step,path):
+        for i in range(0,t,step):
+            state = path[i]
+            for servo in self.servos:
+                print(state[self.servos.index(servo)])
+                #servo.set_position(state[self.servos.index(servo)])
+            time.sleep(step)
+if os.name == "nt":
+    sp = serial.Serial("COM3",115200)
+else:
+    sp = serial.Serial("/dev/ttyUSB0",115200)
 
 
 robot = Robot()
