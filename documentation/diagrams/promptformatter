@@ -1,0 +1,25 @@
+Mode: DO
+Action: [
+    Goto(testtube3)
+    CheckPosition(testtube3)
+    Pick
+  VerifGripped(testtube3)
+     Goto(slot7)
+  CheckPosition(slot7)
+    Place
+    VerifyPlaced(slot7)
+]
+Mode: TEACH
+
+
+action: [
+    Goto(testtube2)
+   CheckPosition(testtube2)
+    Pick
+  VerifyGripped(testtube2)
+    Goto(slot5)
+    CheckPosition(slot5)
+    Place
+    VerifyPlaced(slot5)
+]
+
