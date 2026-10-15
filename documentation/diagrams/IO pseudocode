@@ -1,0 +1,72 @@
+I/O
+
+input
+Please enter the next move (inputted prompt).
+
+Start button
+
+Position sensor
+
+Test tube number
+
+Test tube sensor
+
+Barcode and scanner
+
+Initial rack position, and column number
+
+The new rack and the column number
+
+Position coordinates
+
+Distance from robot arm to wanted test tube
+
+Angle and distance from rack 1 to rack 2.
+
+Extension 40 cm.
+
+OUTPUT
+Output specific forward/inverse kinematics mathematical model instructions from AI prompter.
+
+LED indicators, system working
+
+Servo motors, pre planned movements for initial navigation
+
+Gripper motor, test tube grabbed
+
+New inputs from sensors, new movement plans
+
+Test tubes gets placed in new rack.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
