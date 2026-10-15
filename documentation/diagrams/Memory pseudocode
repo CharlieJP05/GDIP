@@ -1,0 +1,68 @@
+
+INITIALISE tube slots [1, 2, 3, 4, 5]
+LOAD tube positions from memory
+
+FUNCTION MoveTube(from, to)
+
+    IF from contains a tube AND to is empty 
+
+        MOVE robot arm to from
+        PICK UP tube
+        MOVE robot arm to to
+        PLACE tube
+
+        UPDATE from = EMPTY
+        UPDATE to = OCCUPIED
+
+        SAVE updated tube positions into memory
+
+    ELSE
+        DISPLAY "Slot full"
+    END IF
+
+END FUNCTION
+
+
+FUNCTION PutMemory()
+
+    LOAD saved JSON memory
+    CHECK current tube positions
+
+    FOR each recorded action
+
+        IF source contains tube
+           AND destination is empty THEN
+
+            REPLAY recorded movement
+            UPDATE tube positions
+
+        ELSE
+            DISPLAY "Position conflict"
+            STOP
+
+        END IF
+
+    END FOR
+
+    SAVE updated tube positions
+
+END FUNCTION
+
+FUNCTION RecordMovement(source, target):
+
+    RECORD source and target
+
+    FOR each robot movement:
+        RECORD time
+        RECORD joint angles
+        RECORD gripper state
+    END FOR
+
+    SAVE all recorded data INTO "memory.json"
+
+END FUNCTION
+
+
+
+
+
