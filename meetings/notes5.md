@@ -13,3 +13,6 @@
 ID: 10.55
 OD: 12.7mm 1/2 inch
 THICK: 1.1mm 
+
+
+SCREWHOLE TO END TUBE: 9.7mm
