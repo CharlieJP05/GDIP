@@ -50,12 +50,6 @@ class Servo:
 class Robot:
     def __init__(self) -> None:
             self.servos = []
-    def add_servo(self):
-        s = Servo(len(self.servos))
-        self.servos.append(s)
-    def add_many_servos(self,num):
-        for i in range(num):
-            self.add_servo()
     def goto_home(self):
         for servo in self.servos:
             servo.set_point(0.5)
