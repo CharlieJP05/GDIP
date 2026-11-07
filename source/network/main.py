@@ -1,6 +1,9 @@
 import wifi
-import gemini
+import groq
+
 
 wifi.connect()
-print(gemini.call("Say hi"))
 
+prompt="Hello, how are you?"
+answer = groq.call(prompt)
+print(answer)
