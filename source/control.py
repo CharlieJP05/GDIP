@@ -1,29 +1,40 @@
 import pca
 from math import *
 class Servo:
-    def __init__(self,min,home,max,pin) -> None:
-        self.min = 0
-        self.max = 270
-        self.angle = (self.min+self.max)/2
-        self.pin = 0
+    def __init__(self,minimum,home,maximum,servo_id) -> None:
+        self._min = minimum
+        self._max = maximum
+        self._angle = home
+        self._id = servo_id
+        self._home = home
     def set_angle(self,angle):
-        self.angle = angle
-        pca.set_servo_duty(self.pin,angle)
-        # run PWM?
+        self._angle = angle
+        if angle > self._max or angle < self._min:
+            return 0
+        pca.set_servo_duty(self._id,self.get_point())
+        return 1
     def get_angle(self):
-        return self.angle
-    def get_range(self):
-        return # the pos within the range
+        return self._angle
+    def get_point(self): # gets the value 0 - 1 of where it is in its travel
+        return (self._angle - self._min) / (self._max-self._min)
+    def home(self):
+        self.set_angle(self._home)
     
 class Robot:
     def __init__(self) -> None:
-        self.base =     Servo(0,90,180,0)
+        self.base =     Servo(0,135,270,0)
         self.shoulder = Servo(0,90,180,1)
         self.elbow =    Servo(0,90,180,2)
         self.pitch =    Servo(0,90,180,3)
-        self.yaw =      Servo(0,90,180,4)
+        self.roll =     Servo(0,90,180,4)
         self.grip =     Servo(0,90,180,5)
-
+    def home(self):
+        self.base.home()
+        self.shoulder.home()
+        self.elbow.home()
+        self.pitch.home()
+        self.roll.home()
+        self.grip.home()
 
 
 from math import sqrt, sin, cos, atan2, acos, radians, degrees
