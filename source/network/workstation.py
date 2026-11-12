@@ -21,3 +21,4 @@ def get_position(ai_name):
             if ai_name == name + "slot" + str(slot):
                 return point
             slot += 1
+    return None
