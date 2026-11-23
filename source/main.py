@@ -1,8 +1,8 @@
 import json
-import prompt
-import workstation
-import wifi
-import groq
+import source.LLM.prompt as prompt
+import source.Robot.workstation as workstation
+import source.network.wifi as wifi
+import source.LLM.groq as groq
 from picozero import pico_led
 
 

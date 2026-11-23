@@ -1,4 +1,4 @@
-import workstation
+import source.Robot.workstation as workstation
 
 # https://console.groq.com/docs/prompting
 PROMPT = """

@@ -1,4 +1,4 @@
-import pca
+import source.Robot.pca as pca
 from math import *
 class Servo:
     def __init__(self,minimum,home,maximum,servo_id) -> None:

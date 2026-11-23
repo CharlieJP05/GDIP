@@ -1,6 +1,6 @@
 import os
 import ssl
-import wifi
+import source.network.wifi as wifi
 import socketpool
 import adafruit_requests
 
