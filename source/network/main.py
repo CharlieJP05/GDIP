@@ -11,8 +11,6 @@ request = input("\nLab task: ")
 
 plan = json.loads(groq.call(prompt.formatter(request)))
 
-print(plan)
-
 if plan["Mode"] != "DO":
     print("Didnt work")
 else:
