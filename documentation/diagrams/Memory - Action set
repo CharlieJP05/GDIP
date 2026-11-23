@@ -1,1 +1,21 @@
+FUNCTION ActionSet(action, position):
+
+    IF action == "MOVE":
+        MOVE robot to position
+
+    ELSE IF action == "PICK":
+        CLOSE gripper
+
+    ELSE IF action == "PLACE":
+        OPEN gripper
+
+    ELSE IF action == "WAIT":
+        WAIT specified time
+
+    END IF
+
+    RECORD action, position, time, joint angles
+    ADD action TO memory
+
+END FUNCTION
 
