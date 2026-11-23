@@ -1,4 +1,4 @@
-import Network.network as network
+import network
 from time import sleep
 from picozero import pico_led
 from secrets import ssid, password

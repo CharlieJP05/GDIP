@@ -2,13 +2,14 @@ import json
 import LLM.prompt as prompt
 import Robot.workstation as workstation
 import Network.wifi as wifi
+import Network.network as network
 import LLM.groq as groq
 from picozero import pico_led
 
 
 ip = wifi.connect()
-connection = wifi.open_socket(ip)
-wifi.serve(connection)
+connection = network.open_socket(ip)
+network.serve(connection)
 
 
 request = input("\nLab task: ")
