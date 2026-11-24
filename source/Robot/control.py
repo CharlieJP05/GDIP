@@ -1,17 +1,31 @@
-import Robot.pca as pca
+import micropython_pca9685 as pca9685
 from math import *
+import machine
+from math import sqrt, sin, cos, atan2, acos, radians, degrees
+i2c = machine.I2C(0, scl=machine.Pin(17),sda=machine.Pin(16))
+pca = pca9685.PCA9685(i2c)
+pca.frequency = 50
+dh = {
+    "L1":140,
+    "L2":190,
+    "L3":119,
+    "base_height":70
+}
+
 class Servo:
-    def __init__(self,minimum,home,maximum,servo_id) -> None:
+    def __init__(self,minimum,home,maximum,offset,servo_id) -> None:
+        self.servo = pca9685.Servo(pca.channels[servo_id],actuation_range=120)
         self._min = minimum
         self._max = maximum
         self._angle = home
         self._id = servo_id
         self._home = home
+        self._offset = offset
     def set_angle(self,angle):
         self._angle = angle
         if angle > self._max or angle < self._min:
             return 0
-        pca.set_servo_duty(self._id,self.get_point())
+        self.servo.angle = angle + self._offset
         return 1
     def get_angle(self):
         return self._angle
@@ -22,33 +36,43 @@ class Servo:
     
 class Robot:
     def __init__(self) -> None:
-        self.base =     Servo(0,135,270,0)
-        self.shoulder = Servo(0,90,180,1)
-        self.elbow =    Servo(0,90,180,2)
-        self.pitch =    Servo(0,90,180,3)
-        self.roll =     Servo(0,90,180,4)
-        self.grip =     Servo(0,90,180,5)
+        self.base =     Servo(0,60,120,10,0) # min home max offset id
+        self.shoulder = Servo(0,60,120,10,1)
+        self.elbow =    Servo(0,60,120,5,2)
+        self.pitch =    Servo(0,60,120,10,3)
+        self.roll =     Servo(0,60,120,0,4)
+        self.grip =     Servo(0,60,120,0,5)
+        self.ik = Ik()
     def home(self):
-        self.base.home()
-        self.shoulder.home()
-        self.elbow.home()
-        self.pitch.home()
-        self.roll.home()
-        self.grip.home()
+        self.set_angles(60,60,60,60)
+        self.set_roll(60)
+        self.set_grip(60)
+    def set_angles(self,s0,s1,s2,s3):
+        self.base.set_angle(s0)
+        self.shoulder.set_angle(s1)
+        self.elbow.set_angle(s2)
+        self.pitch.set_angle(s3)
+    def go_to(self,x,y,z,p):
+        s0,s1,s2,s3 = self.ik.solve(x,y,z,p)
+        self.set_angles(s0,s1,s2,s3)
+    def set_roll(self,r):
+        self.roll.set_angle(r)
+    def set_grip(self,g):
+        self.grip.set_angle(g)
 
 
-from math import sqrt, sin, cos, atan2, acos, radians, degrees
+
 
 class Ik:
-    def __init__(self, dh):
-        self.dh = dh
+    def __init__(self):
+        pass
 
     def solve(self, x, y, z, p):
         # Link dimensions
-        L1 = self.dh["L1"]
-        L2 = self.dh["L2"]
-        L3 = self.dh["L3"]
-        h = self.dh["base_height"]
+        L1 = dh["L1"]
+        L2 = dh["L2"]
+        L3 = dh["L3"]
+        h = dh["base_height"]
 
         # Convert pitch to radians
         p = radians(p)
@@ -81,9 +105,4 @@ class Ik:
         # Wrist pitch
         q3 = p - q1 - q2
 
-        return {
-            "base": degrees(q0),
-            "shoulder": degrees(q1),
-            "elbow": degrees(q2),
-            "pitch": degrees(q3)
-        }
+        return degrees(q0), degrees(q1), degrees(q2), degrees(q3)
