@@ -66,6 +66,8 @@ class Robot:
 class Ik:
     def __init__(self):
         self.home_angles = (0, 90, -90,0)
+        self.servo_angles = (60, 60, 60, 60)
+        self.directions = (1, 1, 1, 1)
 
     def solve(self, x, y, z, p):
         # Link dimensions
@@ -166,7 +168,29 @@ class Ik:
             L1 + L2*cos(q2)
         )
 
-        # Wrist pitch
-        q3 = p - q1 - q2
+      # Wrist pitch
+q3 = p - q1 - q2
 
-        return degrees(q0), degrees(q1), degrees(q2), degrees(q3)
+# Convert mathematical angles to degrees
+joint_angles = (
+    degrees(q0),
+    degrees(q1),
+    degrees(q2),
+    degrees(q3)
+)
+
+# Convert mathematical angles to servo angles
+servo_angles = []
+
+for i in range(4):
+    angle = self.servo_home[i] + self.directions[i] * (
+        joint_angles[i] - self.home_angles[i]
+    )
+
+    servo_angles.append(angle)
+
+# Diagnostic information
+print("Mathematical angles:", joint_angles)
+print("Servo angles:", servo_angles)
+
+return tuple(servo_angles)
