@@ -65,7 +65,7 @@ class Robot:
 
 class Ik:
     def __init__(self):
-        pass
+        self.home_angles = (0, 90, -90,0)
 
     def solve(self, x, y, z, p):
         # Link dimensions
@@ -158,7 +158,7 @@ class Ik:
 
 
         D = max(-1.0, min(1.0, D))
-        q2 = acos(D)
+        q2 = -acos(D)#acorrding to our understanding of home position the servo is negative, changeable 
 
         # Shoulder angle
         q1 = atan2(zw, rw) - atan2(
