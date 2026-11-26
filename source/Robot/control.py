@@ -162,7 +162,17 @@ class Ik:
                 joint_angles[i] - self.home_angles[i]
             )
 
+            servo_limits = (110, 110, 115, 110)
+
+            if not 0 <= angle <= servo_limits[i]:
+                raise ValueError(
+                    "Joint {} exceeds servo limits: {:.2f}".format(
+                        i, angle
+                    )
+                )
+
             servo_angles.append(angle)
+
 
         # Diagnostic information
         print("Mathematical angles:", joint_angles)
