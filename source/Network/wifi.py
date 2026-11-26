@@ -9,7 +9,7 @@ def connect():
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
     wlan.config(pm=0xa11140)    #disable pico wifi power save mode
-    wlan.connect(ssid, password)
+    print(wlan.connect(ssid))#, password))
     while not wlan.isconnected():
         print('Waiting for connection...')
         pico_led.on()
@@ -18,6 +18,8 @@ def connect():
         sleep(0.5)
     ip = wlan.ifconfig()[0]
     print(f'Connected on {ip}')
+    print("Connected:", wlan.isconnected())
+    print("Network:", wlan.ifconfig())
     pico_led.on()
     return ip
 

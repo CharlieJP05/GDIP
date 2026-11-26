@@ -4,7 +4,7 @@ import sys
 
 def open_socket(ip):
     # Open a socket
-    address = (ip, 80)
+    address = ("0.0.0.0", 80)
     connection = socket.socket()
     connection.bind(address)
     connection.listen(1)

@@ -9,23 +9,22 @@ from Network import wifi, network
 
 
 
-rob = control.Robot()
-rob.home()
-time.sleep(1)
-rob.go_to(10,10,10,0)
-print("1")
-time.sleep(3)
-rob.go_to(110,90,100,0)
-print("2")
+# rob = control.Robot()
+# rob.home()
+# time.sleep(1)
+# rob.go_to(10,10,10,0)
+# print("1")
+# time.sleep(3)
+# rob.go_to(110,90,100,0)
+# print("2")
 
-sys.exit() ## remove
+# sys.exit() ## remove
 ip = wifi.connect()
 connection = network.open_socket(ip)
 network.serve(connection)
 
 
 request = input("\nLab task: ")
-
 plan = json.loads(groq.call(prompt.formatter(request)))
 
 if plan["Mode"] == "DO":
@@ -37,7 +36,6 @@ elif plan["Mode"] == "Error":
     print(f"Error: {plan["Reason"]}")
 else:
     print(f"Unknown Error: {plan}")
-
 
 # Shutdown Code
 
