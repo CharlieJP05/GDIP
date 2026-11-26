@@ -144,28 +144,28 @@ class Ik:
         )
 
       # Wrist pitch
-q3 = p - q1 - q2
+        q3 = p - q1 - q2
 
-# Convert mathematical angles to degrees
-joint_angles = (
-    degrees(q0),
-    degrees(q1),
-    degrees(q2),
-    degrees(q3)
-)
+        # Convert mathematical angles to degrees
+        joint_angles = (
+            degrees(q0),
+            degrees(q1),
+            degrees(q2),
+            degrees(q3)
+        )
 
-# Convert mathematical angles to servo angles
-servo_angles = []
+        # Convert mathematical angles to servo angles
+        servo_angles = []
 
-for i in range(4):
-    angle = self.servo_home[i] + self.directions[i] * (
-        joint_angles[i] - self.home_angles[i]
-    )
+        for i in range(4):
+            angle = self.servo_home[i] + self.directions[i] * (
+                joint_angles[i] - self.home_angles[i]
+            )
 
-    servo_angles.append(angle)
+            servo_angles.append(angle)
 
-# Diagnostic information
-print("Mathematical angles:", joint_angles)
-print("Servo angles:", servo_angles)
+        # Diagnostic information
+        print("Mathematical angles:", joint_angles)
+        print("Servo angles:", servo_angles)
 
-return tuple(servo_angles)
+        return tuple(servo_angles)
