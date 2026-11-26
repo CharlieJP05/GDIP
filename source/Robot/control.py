@@ -66,7 +66,7 @@ class Robot:
 class Ik:
     def __init__(self):
         self.home_angles = (0, 90, -90,0)
-        self.servo_angles = (60, 60, 60, 60)
+        self.servo_home = (60, 60, 60, 60)
         self.directions = (1, 1, 1, 1)
 
     def solve(self, x, y, z, p):
@@ -133,31 +133,6 @@ class Ik:
         # Geometric reach limits
         min_reach = abs(L1 - L2)
         max_reach = L1 + L2
-
-        # Diagnostic information
-        print("IK target (mm):", x, y, z)
-        print("Pitch (degrees):", degrees(p))
-        print("Wrist centre (mm):", rw, zw)
-        print("Wrist distance (mm):", distance)
-        print("Allowed distance (mm):", min_reach, max_reach)
-
-        # Check whether the target is reachable
-        tolerance = 0.000001
-
-        if (distance < min_reach - tolerance or
-                distance > max_reach + tolerance):
-            raise ValueError(
-                "IK unreachable: wrist distance = {:.2f} mm, "
-                "allowed = {:.2f} to {:.2f} mm".format(
-                    distance, min_reach, max_reach
-                )
-            )
-
-        # Cosine rule
-        D = (rw**2 + zw**2 - L1**2 - L2**2) / (2*L1*L2)
-
-        D = max(-1.0, min(1.0, D))
-
 
         D = max(-1.0, min(1.0, D))
         q2 = -acos(D)#acorrding to our understanding of home position the servo is negative, changeable 
