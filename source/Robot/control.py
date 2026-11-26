@@ -88,10 +88,74 @@ class Ik:
         zw = z - h - L3*sin(p)
 
         # Elbow angle
+        #D = (rw**2 + zw**2 - L1**2 - L2**2) / (2*L1*L2)
+
+        #if D < -1-1e-9 or D > 1+1e-9:
+            #raise ValueError("Target is unreachable")
+        
+        # Calculate wrist distance in mm
+        
+        # Calculate wrist distance in mm
+        distance = sqrt(rw**2 + zw**2)
+
+        # Geometric reach limits
+        min_reach = abs(L1 - L2)
+        max_reach = L1 + L2
+
+        # Diagnostic information
+        print("IK target (mm):", x, y, z)
+        print("Pitch (degrees):", degrees(p))
+        print("Wrist centre (mm):", rw, zw)
+        print("Wrist distance (mm):", distance)
+        print("Allowed distance (mm):", min_reach, max_reach)
+
+        # Check whether the target is reachable
+        tolerance = 0.000001
+
+        if (distance < min_reach - tolerance or
+                distance > max_reach + tolerance):
+            raise ValueError(
+                "IK unreachable: wrist distance = {:.2f} mm, "
+                "allowed = {:.2f} to {:.2f} mm".format(
+                    distance, min_reach, max_reach
+                )
+            )
+
+        # Cosine rule
         D = (rw**2 + zw**2 - L1**2 - L2**2) / (2*L1*L2)
 
-        if D < -1-1e-9 or D > 1+1e-9:
-            raise ValueError("Target is unreachable")
+        D = max(-1.0, min(1.0, D))
+
+        distance = sqrt(rw**2 + zw**2)
+
+        # Geometric reach limits
+        min_reach = abs(L1 - L2)
+        max_reach = L1 + L2
+
+        # Diagnostic information
+        print("IK target (mm):", x, y, z)
+        print("Pitch (degrees):", degrees(p))
+        print("Wrist centre (mm):", rw, zw)
+        print("Wrist distance (mm):", distance)
+        print("Allowed distance (mm):", min_reach, max_reach)
+
+        # Check whether the target is reachable
+        tolerance = 0.000001
+
+        if (distance < min_reach - tolerance or
+                distance > max_reach + tolerance):
+            raise ValueError(
+                "IK unreachable: wrist distance = {:.2f} mm, "
+                "allowed = {:.2f} to {:.2f} mm".format(
+                    distance, min_reach, max_reach
+                )
+            )
+
+        # Cosine rule
+        D = (rw**2 + zw**2 - L1**2 - L2**2) / (2*L1*L2)
+
+        D = max(-1.0, min(1.0, D))
+
 
         D = max(-1.0, min(1.0, D))
         q2 = acos(D)
