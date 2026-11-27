@@ -117,11 +117,11 @@ class Ik:
         max_reach = L1 + L2
 
         # Diagnostic information
-        print("IK target (mm):", x, y, z)
-        print("Pitch (degrees):", degrees(p))
-        print("Wrist centre (mm):", rw, zw)
-        print("Wrist distance (mm):", distance)
-        print("Allowed distance (mm):", min_reach, max_reach)
+        print("IK // IK target (mm):", x, y, z)
+        print("IK // Pitch (degrees):", degrees(p))
+        print("IK // Wrist centre (mm):", rw, zw)
+        print("IK // Wrist distance (mm):", distance)
+        print("IK // Allowed distance (mm):", min_reach, max_reach)
 
         # Check whether the target is reachable
         tolerance = 0.000001
