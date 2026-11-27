@@ -1,16 +1,28 @@
-import micropython_pca9685 as pca9685
 from math import *
-import machine
+
 from math import sqrt, sin, cos, atan2, acos, radians, degrees
-i2c = machine.I2C(0, scl=machine.Pin(17),sda=machine.Pin(16))
-pca = pca9685.PCA9685(i2c)
-pca.frequency = 50
-dh = {
-    "L1":140,
-    "L2":190,
-    "L3":119,
-    "base_height":70
-}
+
+pca = None
+pca9685 = None
+dh = None
+def init(SIM=False):
+    global pca, pca9685, dh
+    if SIM:
+        import Robot.simulated as pca9685
+        i2c = None
+    else:
+        import machine
+        import micropython_pca9685 as pca9685
+        i2c = machine.I2C(0, scl=machine.Pin(17),sda=machine.Pin(16))
+
+    pca = pca9685.PCA9685(i2c)
+    pca.frequency = 50
+    dh = {
+        "L1":140,
+        "L2":190,
+        "L3":119,
+        "base_height":70
+    }
 
 class Servo:
     def __init__(self,minimum,home,maximum,offset,servo_id) -> None:

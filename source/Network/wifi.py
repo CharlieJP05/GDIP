@@ -1,7 +1,15 @@
-import network
 from time import sleep
-from picozero import pico_led
 from secrets import ssid, password
+pico_led = None
+network = None
+def init(SIM=False):
+    global pico_led, network
+    if SIM:
+        import Robot.simulated as pico_led
+        import Robot.simulated as network
+    else:
+        import network
+        from picozero import pico_led
 
 def connect():
     #connect to WLAN

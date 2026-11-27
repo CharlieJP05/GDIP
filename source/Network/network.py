@@ -1,6 +1,12 @@
 import socket
-from picozero import pico_led
 import sys
+pico_led = None
+def init(SIM=False):
+    global pico_led
+    if SIM:
+        import Robot.simulated as pico_led
+    else:
+        from picozero import pico_led
 
 def open_socket(ip):
     # Open a socket
